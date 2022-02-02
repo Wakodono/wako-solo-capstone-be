@@ -4,7 +4,8 @@
   "description": "The backend of my Strive School solo capstone project",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon -r dotenv/config ./src/server.js"
   },
   "repository": {
     "type": "git",
