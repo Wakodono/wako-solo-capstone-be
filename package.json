@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "description": "The backend of my Strive School solo capstone project",
   "main": "index.js",
+  "type": "module",
   "scripts": {
+    "start": "node ./src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon -r dotenv/config ./src/server.js"
+    "dev": "nodemon -e js -r dotenv/config ./src/server.js"
   },
   "repository": {
     "type": "git",
@@ -19,6 +21,13 @@
   },
   "homepage": "https://github.com/Wakodono/wako-solo-capstone-be#readme",
   "dependencies": {
-    "express": "^4.17.2"
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.2",
+    "express-list-endpoints": "^6.0.0",
+    "http-errors": "^2.0.0",
+    "mongoose": "^6.1.10",
+    "nodemon": "^2.0.15",
+    "passport": "^0.5.2"
   }
 }
