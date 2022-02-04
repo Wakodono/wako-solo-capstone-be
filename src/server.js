@@ -3,7 +3,9 @@ import cors from 'cors'
 import listEndpoints from 'express-list-endpoints'
 import passport from 'passport'
 import mongoose from 'mongoose'
-// import registerRouter from './services/register/index.js'
+import registerRouter from './services/register/index.js'
+// import usersRouter from './services/users/index.js'
+import loginRouter from './services/login/index.js'
 import userRouter from './services/singleUser/index.js'
 import {
     badRequestHandler,
@@ -38,8 +40,8 @@ server.use(express.json())
 
 // Routes
 
-// server.use("/register", registerRouter)
-// server.use("/login", loginRouter)
+server.use("/register", registerRouter)
+server.use("/login", loginRouter)
 server.use("/me", userRouter)
 // server.use("users", usersRouter)
 
