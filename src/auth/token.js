@@ -1,5 +1,5 @@
 import createHttpError from "http-errors";
-import UserModel from "../db/models/users.model.js";
+import UserModel from "../db/models/userModel.js";
 import { verifyJWToken } from "./tools.js";
 
 export default async function JWTAuth(req,res,next) {
