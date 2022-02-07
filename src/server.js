@@ -3,8 +3,9 @@ import cors from 'cors'
 import listEndpoints from 'express-list-endpoints'
 import passport from 'passport'
 import mongoose from 'mongoose'
+import GoogleStrategy from '../src/auth/oauth.js'
 import registerRouter from './services/register/index.js'
-// import usersRouter from './services/users/index.js'
+import usersRouter from './services/users/index.js'
 import loginRouter from './services/login/index.js'
 import userRouter from './services/singleUser/index.js'
 import {
@@ -43,7 +44,7 @@ server.use(express.json())
 server.use("/register", registerRouter)
 server.use("/login", loginRouter)
 server.use("/me", userRouter)
-// server.use("users", usersRouter)
+server.use("users", usersRouter)
 
 // Error handling middlewares
 
