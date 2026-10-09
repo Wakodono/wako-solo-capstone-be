@@ -29,7 +29,6 @@ async function forwardToCoinranking(req, res, next) {
 }
 
 cryptoRouter.get("/coins", forwardToCoinranking)
-cryptoRouter.get("/exchanges", forwardToCoinranking)
 cryptoRouter.get("/coin/:coinId", forwardToCoinranking)
 cryptoRouter.get("/coin/:coinId/history", forwardToCoinranking)
 

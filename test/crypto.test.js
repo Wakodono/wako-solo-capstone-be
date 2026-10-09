@@ -44,8 +44,8 @@ test("serves repeat requests from the cache", async () => {
         new Response(JSON.stringify({ data: {} }), { status: 200 })
     )
 
-    await request(app).get("/crypto/exchanges")
-    await request(app).get("/crypto/exchanges")
+    await request(app).get("/crypto/coin/Qwsogvtv82FCd")
+    await request(app).get("/crypto/coin/Qwsogvtv82FCd")
 
     assert.equal(fetchMock.mock.callCount(), 1)
 })
@@ -61,7 +61,7 @@ test("returns 503 when the API key is missing", async () => {
 test("does not proxy paths outside the allowed list", async () => {
     const fetchMock = mock.method(globalThis, "fetch", async () => new Response("{}"))
 
-    const res = await request(app).get("/crypto/markets")
+    const res = await request(app).get("/crypto/exchanges")
 
     assert.equal(res.status, 404)
     assert.equal(fetchMock.mock.callCount(), 0)

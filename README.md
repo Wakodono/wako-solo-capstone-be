@@ -42,7 +42,6 @@ The backend does two jobs:
 | GET | /crypto/coins | Coin list and global stats (`?limit=`) |
 | GET | /crypto/coin/:coinId | Details for one coin |
 | GET | /crypto/coin/:coinId/history | Price history (`?timeperiod=`) |
-| GET | /crypto/exchanges | Exchanges |
 | GET | /news | Latest news (`?q=` coin name, `?count=` up to 50) |
 | POST | /register | Register a new user |
 | POST | /login | Log in and receive an access token |
