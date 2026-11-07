@@ -1,52 +1,62 @@
-# Wako Solo Capstone Backend
+# CoinView Backend
 
-This repository contains the backend for my Strive School solo capstone project. The project is a **cryptocurrency dashboard designed to provide trading enthusiasts with real-time data and insights**. It serves as the server-side component, handling data storage, business logic, and API endpoints for the frontend application.
+Backend API for CoinView, a Strive School solo capstone project. Handles user authentication and account management for the companion frontend application.
 
-## Table of Contents
+**Frontend repository:** [wako-solo-capstone](https://github.com/Wakodono/wako-solo-capstone)
 
-- [Project Overview](#project-overview)
-- [Features](#features)
-- [Technologies Used](#technologies-used)
-- [API Endpoints](#api-endpoints)
+## Stack
 
-## Project Overview
+- **Node.js** with **Express**
+- **MongoDB** via Mongoose
+- **JWT** for session tokens
+- **bcrypt** for password hashing
+- **express-validator** for input validation
+- **Cloudinary** for avatar image storage
+- **Passport** with Google OAuth strategy (prepared; not currently initialised)
 
-The backend is built to support a **cryptocurrency dashboard application**. It provides a RESTful API to handle **user authentication, cryptocurrency data retrieval, and CRUD operations for trading data**. The project demonstrates skills in backend development, database management, and API design learned during the Strive School bootcamp.
+## Routes
 
-## Features
+| Method | Path | Description |
+|--------|------|-------------|
+| POST | `/register` | Create a new user account |
+| POST | `/login` | Authenticate and receive a JWT |
+| GET | `/login/googleLogin` | Redirect to Google OAuth |
+| GET | `/login/googleRedirect` | Google OAuth callback |
+| GET | `/me` | Retrieve the authenticated user's profile |
+| PUT | `/me` | Update the authenticated user's profile |
+| DELETE | `/me` | Delete the authenticated user's account |
+| GET | `/users` | List all users (admin only) |
+| POST | `/users` | Create a user (admin only) |
+| GET | `/users/:id` | Retrieve a user by ID (admin only) |
+| PUT | `/users/:id` | Update a user by ID (admin only) |
+| DELETE | `/users/:id` | Delete a user by ID (admin only) |
+| POST | `/users/:id/uploadAvatar` | Upload avatar image (admin only) |
 
-- **User authentication and authorization** using JWT-based login
-- **CRUD operations** for users and cryptocurrency data
-- **Database integration** with MongoDB using Mongoose ORM
-- **Error handling and input validation**
-- **Real-time updates** for cryptocurrency prices
-- **Secure password hashing** with bcrypt
-- **Cross-origin resource sharing** (CORS) support
+## Local Setup
 
-## Technologies Used
+1. Clone this repository.
+2. Run `npm install`.
+3. Create a `.env` file with the following variables:
 
-- **Node.js**: JavaScript runtime for building the server
-- **Express.js**: Web framework for creating API endpoints
-- **MongoDB**: NoSQL database for data storage
-- **Mongoose**: ORM for MongoDB
-- **JWT**: For secure user sessions
-- **Bcrypt**: For password hashing
-- **CORS**: For handling cross-origin requests
-- **dotenv**: For managing environment variables
-- **Deployment**: Deployed on Heroku
+   ```
+   PORT
+   MONGODB_URI
+   JWT_SECRET
+   FE_LOCAL_URL
+   REACT_APP_FE_PROD_URL
+   GOOGLE_OAUTH_ID
+   GOOGLE_OAUTH_SECRET
+   API_URL
+   FE_URL
+   CLOUDINARY_URL
+   ```
 
+4. Start the server:
+   - Development: `npm run dev`
+   - Production: `npm start`
 
-## API Endpoints
+## Notes
 
-Below are the main endpoints of the cryptocurrency dashboard:
-
-| Method | Endpoint               | Description                      |
-|--------|------------------------|----------------------------------|
-| GET    | /api/users             | Retrieve all users               |
-| POST   | /api/users/register    | Register a new user              |
-| POST   | /api/users/login       | Authenticate a user              |
-| GET    | /api/cryptos           | Retrieve all cryptocurrencies    |
-| GET    | /api/cryptos/:id       | Get a specific cryptocurrency by ID |
-| POST   | /api/cryptos           | Add a new cryptocurrency         |
-| PUT    | /api/cryptos/:id       | Update a specific cryptocurrency |
-| DELETE | /api/cryptos/:id       | Delete a specific cryptocurrency |
+- The `/users` routes require JWT authentication and an `Admin` role.
+- Google OAuth routes are defined but `passport.initialize()` is commented out in `server.js`.
+- Password hashing occurs automatically via a Mongoose pre-save hook.
