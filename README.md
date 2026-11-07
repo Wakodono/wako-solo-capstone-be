@@ -6,7 +6,7 @@ Backend API for CoinView, a Strive School solo capstone project. Built with Node
 
 ## Routes
 
-Routes below are defined in source. Google OAuth routes are present but non-functional: `passport.initialize()` is commented out in `src/server.js`.
+Routes below are defined in source. Google OAuth routes exist but are non-functional: `passport.initialize()` is commented out and `passport.use()` is never called.
 
 | Method | Path | Description | Status |
 |--------|------|-------------|--------|
@@ -26,12 +26,19 @@ Routes below are defined in source. Google OAuth routes are present but non-func
 
 ## Local Setup
 
-**Required environment variables** (server will not start or function without these):
+Startup requirements have not been runtime-tested. The following is inferred from source inspection.
+
+**Environment variables read at startup:**
 
 ```
 MONGODB_URI=<connection string>
 JWT_SECRET=<signing key>
+GOOGLE_OAUTH_ID=<client id>
+GOOGLE_OAUTH_SECRET=<client secret>
+API_URL=<base URL for OAuth callback>
 ```
+
+`MONGODB_URI` and `JWT_SECRET` are required for core functionality. The Google OAuth variables are read at startup because `src/auth/oauth.js` constructs the strategy at import time (line 6), even though the OAuth flow is incomplete. Behaviour with missing values has not been tested.
 
 **Optional:**
 
@@ -39,25 +46,25 @@ JWT_SECRET=<signing key>
 PORT=3001
 FE_LOCAL_URL=<frontend origin for CORS>
 REACT_APP_FE_PROD_URL=<additional frontend origin for CORS>
+FE_URL=<frontend redirect after OAuth>
 ```
 
-Create a `.env` file with at least the required variables, then:
+Create a `.env` file, then:
 
 ```
 npm install
 npm run dev
 ```
 
-`npm start` runs without nodemon or dotenv preload; suitable for environments that inject variables separately.
+`npm start` runs without nodemon or dotenv preload.
 
-### Optional integrations
+### Cloudinary
 
-**Cloudinary** (avatar uploads): Set `CLOUDINARY_URL` or individual `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET` variables. Without configuration, avatar upload routes will fail at runtime.
-
-**Google OAuth**: Requires `GOOGLE_OAUTH_ID`, `GOOGLE_OAUTH_SECRET`, `API_URL`, and `FE_URL`. Currently non-functional because `passport.initialize()` is commented out in source.
+Avatar upload routes use Cloudinary via `multer-storage-cloudinary`. The code passes the imported `cloudinary` instance to the storage constructor but does not call `cloudinary.config()`. Configuration relies on SDK auto-detection of `CLOUDINARY_URL`. Without this variable, avatar uploads will fail at runtime.
 
 ## Known Constraints
 
-- Routes have not been runtime-tested as part of this documentation; functionality is inferred from source inspection only.
-- No deployment configuration (e.g. Procfile, container definitions) is present in the repository.
+- Startup and route behaviour have not been runtime-tested; functionality is inferred from source inspection only.
+- No deployment configuration (Procfile, container definitions) is present.
 - The `/users` mount in `src/server.js` omits the leading slash, which may affect route resolution.
+- Google OAuth setup is incomplete: the strategy is constructed but never registered with `passport.use()`, and `passport.initialize()` is commented out.
